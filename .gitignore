@@ -375,4 +375,8 @@ poetry.toml
 # ruff
 .ruff_cache/
 
-# End of https://www.toptal.com/developers/gitignore/api/go,c,node,python
+# binaries
+*/**/AOC
+*/**/day_4
+
+*/**/input.txt

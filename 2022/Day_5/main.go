@@ -60,7 +60,7 @@ func main() {
 			}
 		} else {
 			quantity, source, target := parse_moves(line)
-			temp, stage[source] = pop_stack(stage[source], quantity)
+			temp, stage[source] = pop_stack_v2(stage[source], quantity)
 			stage[target] = append(temp, stage[target]...)
 		}
 	}
@@ -74,5 +74,11 @@ func pop_stack(stack []string, quantity int) ([]string, []string) {
     for i := range stack[:quantity] {
         temp = append([]string{stack[i]}, temp...) 
     }
+    return temp, stack[quantity:]
+}
+
+func pop_stack_v2(stack []string, quantity int) ([]string, []string) {
+    temp := make([]string, quantity)
+    copy(temp, stack[:quantity])
     return temp, stack[quantity:]
 }

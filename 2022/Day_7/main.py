@@ -39,6 +39,7 @@ def print_tree(start_dir: Directory, indent: int):
     for dir in start_dir.sub_folder:
         print_tree(dir, indent + 1)
 
+
 def get_sizes(folders: [Directory], limit: int) -> [Directory]:
     under_dir = []
     for folder in folders:
@@ -52,6 +53,7 @@ def get_sizes(folders: [Directory], limit: int) -> [Directory]:
 
 with open("./input.txt") as inputs:
     root = Directory("/")
+    root_size = 0
     current_dir = root
     previous_dir = None
     current_command = ""
@@ -73,5 +75,12 @@ with open("./input.txt") as inputs:
                 current_dir.add_dir(Directory(args[1], current_dir))
             else:
                 current_dir.add_file(args[0])
-
-    print(sum(get_sizes(root.sub_folder, 100000)))
+    free_size = 70000000 - root.get_size()
+    upper = 31000000
+    lower = 29000000
+    print(
+        sorted(
+            filter(lambda x: x[1] <= upper and x[1] >= lower,map(lambda x: [x, x + free_size], get_sizes(root.sub_folder, 3000000000))),
+            key=lambda x: x[1],
+        )
+    )

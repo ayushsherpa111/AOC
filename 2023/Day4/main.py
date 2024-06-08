@@ -10,5 +10,7 @@ with open("./input.txt") as input_file:
         win, score = set(card[0]), set(card[1])
         wins = win.intersection(score)
         if len(wins) > 0:
-            total_score += pow(2, len(win.intersection(score)) - 1)
+            print(wins, card, total_score)
+            total_score += 1
+            total_score += pow(2, len(wins) - 1)
     print(total_score)

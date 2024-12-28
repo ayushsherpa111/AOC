@@ -26,24 +26,10 @@ func main() {
 	lines := prepareInput(file)
 	sum := 0
 	signal := make(chan int)
-	go func() {
-		for i := 0; i < len(lines); i++ {
-			prep := make([]string, 0, 3)
-			currLine := 0
-			if i >= 3 {
-				prep = append(prep, lines[i-3], lines[i-2], lines[i-1])
-				currLine += 3
-			}
-			prep = append(prep, lines[i])
+    defer close(signal)
+	go solvepart2(lines, signal)
 
-			go func() {
-				result := FindXMAS(prep, currLine)
-				signal <- result
-			}()
-		}
-	}()
-
-	for i := 0; i < len(lines); i++ {
+	for i := 0; i < len(lines)-2; i++ {
 		sum += <-signal
 	}
 	fmt.Println(sum)

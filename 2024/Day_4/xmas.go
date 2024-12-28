@@ -24,7 +24,24 @@ func checkXMAS(searchB []byte) int {
 	return 0
 }
 
-func FindXMAS(inpXmas []string, currentLine int) int {
+func solvePart1(lines []string, signal chan int) {
+	for i := 0; i < len(lines); i++ {
+		prep := make([]string, 0, 3)
+		currLine := 0
+		if i >= 3 {
+			prep = append(prep, lines[i-3], lines[i-2], lines[i-1])
+			currLine += 3
+		}
+		prep = append(prep, lines[i])
+
+		go func() {
+			result := findXMAS(prep, currLine)
+			signal <- result
+		}()
+	}
+}
+
+func findXMAS(inpXmas []string, currentLine int) int {
 	mainChan := make(chan int)
 	defer close(mainChan)
 
